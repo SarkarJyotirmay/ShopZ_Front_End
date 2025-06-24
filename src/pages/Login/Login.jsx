@@ -23,7 +23,7 @@ const Login = () => {
     console.log("Logging in with:", formData);
     // Add your login logic here (API call, validation etc.)
     try {
-      const response = await axiosInstance.post("user/login", formData);
+      const response = await axiosInstance.post("/user/login", formData);
       console.log(response.data);
       dispatch(setUser(response.data.user)) // setting state in user slice
       localStorage.setItem("token", JSON.stringify(response.data.token))

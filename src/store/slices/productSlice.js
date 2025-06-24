@@ -10,7 +10,7 @@ const initialState = {
 export const fetchProducts = createAsyncThunk("fetch/products", async (_, thunkAPI) => {
   try {
     const response = await axiosInstance.get(
-    "/products/list/?pageNo=1&pageSize=30"
+    "/products/list/?pageNo=1&pageSize=31"
   );
   return response.data.products;
   } catch (error) {

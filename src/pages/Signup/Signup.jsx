@@ -51,10 +51,11 @@ const Signup = () => {
     console.log("Form Data:", formData);
     // send to backend here register api call
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}user/register`,
+      const response = await axiosInstance.post(
+        // ! ${import.meta.env.VITE_API_URL}
+        `/user/register`,
         formData
-      ); // as instance not working //ToDo: Use redux store to handle async task
+      ); // as instance not working //ToDo: Use redux store to handle async task => at login
       console.log(response.data);
       navigate("/login");
     } catch (error) {
