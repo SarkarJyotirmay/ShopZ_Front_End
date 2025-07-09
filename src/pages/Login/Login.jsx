@@ -3,6 +3,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../store/slices/userSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -28,8 +29,10 @@ const Login = () => {
       dispatch(setUser(response.data.user)) // setting state in user slice
       localStorage.setItem("token", JSON.stringify(response.data.token))
       navigate("/");
+      toast.success("Logged in successfully!")
     } catch (error) {
       console.error("Error from login submission", error);
+      toast.error("Oops! something went wrong, could not log in.")
     }
   };
 

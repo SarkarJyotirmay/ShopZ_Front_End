@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { clearUser } from "../../store/slices/userSlice";
+import { toast } from "react-toastify";
 
 const LoggedInUser = () => {
   const { userDetails } = useSelector((state) => state.user);
@@ -14,6 +15,7 @@ const LoggedInUser = () => {
     dispatch(clearUser());
     // Optional: localStorage.removeItem("token");
     localStorage.removeItem("token")
+    toast.success("Successfully logged out!")
   };
 
   // Close dropdown when clicking outside

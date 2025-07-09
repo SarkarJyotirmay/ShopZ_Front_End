@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../utils/axiosInstance";
 import { addToCart } from "../../store/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Product = ({ product }) => {
   const { userDetails } = useSelector((state) => state.user);
@@ -12,7 +13,8 @@ const Product = ({ product }) => {
   const navigate = useNavigate()
 
   const handleAddToCart = (e,product) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
     e.stopPropagation();
     if(!userDetails){
       navigate("/login")
@@ -20,12 +22,19 @@ const Product = ({ product }) => {
     }
     // dispatch(addToCart(product));
     dispatch(addToCart({ productId: product._id, qty: 1 }));
+    toast.success("Item added to cart")
     console.log("Added to cart:", product.title);
+    } catch (error) {
+      console.log("Error in adding item to cart: ",error);
+      toast.error("Oops something went wrong! could not add item to cart")
+    }
+
   };
 
   const handleAddToWishlist = (product) => {
     // dispatch(addToWishlist(product));
     console.log("Added to wishlist:", product.title);
+    toast.success("Item added to wishlist.")
   };
 
   return (

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchSingleProduct } from "../../store/slices/productSlice"; // adjust path if needed
 import { addToCart } from "../../store/slices/cartSlice";
+import { toast } from "react-toastify";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -32,11 +33,13 @@ const SingleProduct = () => {
     }
     dispatch(addToCart({ productId: product._id, qty: 1 }));
     console.log("Added to cart:", product.title);
+    toast.success("Item added to cart.")
   };
 
   const handleAddToWishlist = (product) => {
     // dispatch(addToWishlist(product));
     console.log("Added to wishlist:", product.title);
+    toast.success("Item added to wishlist.")
   };
 
   if (loading)

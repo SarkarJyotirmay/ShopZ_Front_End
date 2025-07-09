@@ -57,10 +57,10 @@ const Header = () => {
             <LoggedInUser />
           ) : (
             <Link
-              to="/signup"
+              to="/login"
               className="text-white hover:underline transition-all duration-300"
             >
-              Signup
+              Login
             </Link>
           )}
         </nav>

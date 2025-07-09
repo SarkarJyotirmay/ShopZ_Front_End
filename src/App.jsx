@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import HomeLayout from "./components/HomeLayout/HomeLayout";
 import Home from "./pages/Home/Home";
 import Signup from "./pages/Signup/Signup";
@@ -16,19 +20,20 @@ import axiosInstance from "./utils/axiosInstance";
 import { setUser } from "./store/slices/userSlice";
 import Cart from "./pages/Cart/Cart";
 import SingleProduct from "./pages/products/SingleProduct";
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   // for state less login
-  const dispatch = useDispatch()
-  const fetchUser = async()=>{
-   const response = await axiosInstance.get("/auth/bypass/login")
-   dispatch(setUser(response.data.user))
-  } 
-  useEffect(()=>{
+  const dispatch = useDispatch();
+  const fetchUser = async () => {
+    const response = await axiosInstance.get("/auth/bypass/login");
+    dispatch(setUser(response.data.user));
+  };
+  useEffect(() => {
     console.log("Token: ", JSON.parse(localStorage.getItem("token")));
-    
-    fetchUser()
-  },[])
+
+    fetchUser();
+  }, []);
 
   const router = createBrowserRouter([
     {
@@ -49,7 +54,7 @@ const App = () => {
         },
         {
           path: "/cart",
-          element: <Cart />
+          element: <Cart />,
         },
         {
           path: "/about",
@@ -93,6 +98,18 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router}></RouterProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
