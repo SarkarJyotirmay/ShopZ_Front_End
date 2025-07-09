@@ -22,7 +22,7 @@ const App = () => {
   const fetchUser = async()=>{
    const response = await axiosInstance.get("/auth/bypass/login")
    dispatch(setUser(response.data.user))
-  }
+  } 
   useEffect(()=>{
     console.log("Token: ", JSON.parse(localStorage.getItem("token")));
     
