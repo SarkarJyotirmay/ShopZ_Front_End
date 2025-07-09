@@ -70,12 +70,12 @@ const Header = () => {
           onClick={toggleMenu}
           className="md:hidden text-white focus:outline-none z-20"
         >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          {menuOpen ? <X size={28} className="fixed top-4 right-4"/> : <Menu size={28} />}
         </button>
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`min-h-screen absolute top-0 left-0 w-full h-full bg-[#4e46e5e0] backdrop-blur-sm text-white flex flex-col items-center justify-center gap-8 transform transition-transform duration-500 ease-in-out z-10 ${
+          className={`min-h-screen fixed top-0 left-0 w-full h-screen  bg-[#4e46e5e0] backdrop-blur-sm text-white flex flex-col items-center justify-center gap-8 transform transition-transform duration-500 ease-in-out z-10 ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

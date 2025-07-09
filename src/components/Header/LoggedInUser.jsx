@@ -32,11 +32,11 @@ const LoggedInUser = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <div
-        className="user flex items-center gap-2 cursor-pointer text-indigo-700 hover:text-indigo-900"
+        className="user flex items-center gap-2 cursor-pointer text-white hover:text-gray-300 md:text-indigo-700 md:hover:text-indigo-900"
         onClick={() => setIsOpen(!isOpen)}
       >
         <FaRegUserCircle className="text-xl" />
-        <span className="capitalize font-medium">
+        <span className="capitalize font-medium ">
           {userDetails?.firstName || "User"}
         </span>
       </div>
