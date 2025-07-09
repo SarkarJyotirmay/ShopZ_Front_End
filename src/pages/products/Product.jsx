@@ -11,7 +11,9 @@ const Product = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = (e,product) => {
+    e.preventDefault();
+    e.stopPropagation();
     if(!userDetails){
       navigate("/login")
       return
@@ -63,7 +65,7 @@ const Product = ({ product }) => {
 
       <div className="flex gap-3 mt-4">
         <button
-          onClick={() => handleAddToCart(product)}
+          onClick={(e) => handleAddToCart(e,product)}
           className={`bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl w-full text-sm ${
             userDetails ? "cursor-pointer" : "cursor-not-allowed"
           }`}

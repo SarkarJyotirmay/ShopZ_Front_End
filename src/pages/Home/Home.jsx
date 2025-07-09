@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Products from "../products/Products";
 
 const Home = () => {
   return (
     <div className="min-h-screen bg-[#f9fafb] text-gray-800">
       {/* Hero Section */}
-      <section className="relative bg-white px-6 py-20 text-center overflow-hidden">
+      <section className="hero relative bg-white px-6 py-20 text-center overflow-hidden">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-[#4F46E5] mb-6">
             Discover the Latest Trends
@@ -28,6 +29,8 @@ const Home = () => {
          to-[#E11D48]/30 pointer-events-none"
         ></div>
       </section>
+      {/* Hot deals temporarily filled with products will be replaced if needed */}
+      <Products heading={"Todays Hot deals"}/>
     </div>
   );
 };

@@ -41,8 +41,7 @@ const Cart = () => {
       <div className="space-y-6">
         {cart?.length > 0 &&
           cart.map((item) => {
-            // !
-            console.log({ productId: item.productId._id, qty: item.qty });
+            // console.log({ productId: item.productId._id, qty: item.qty });
 
             return (
               <div
