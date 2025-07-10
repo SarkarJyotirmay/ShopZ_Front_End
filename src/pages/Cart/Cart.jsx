@@ -5,6 +5,7 @@ import {
   fetchCart,
   removeFromCart,
 } from "../../store/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -100,6 +101,12 @@ const Cart = () => {
               </div>
             );
           })}
+        <Link
+          to="/checkout"
+          className="bg-blue-500 p-2 rounded-md text-white w-[300px] m-auto"
+        >
+          Go to Checkout
+        </Link>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export const addToCart = createAsyncThunk(
       });
       return {
         data: response.data,
-        passedArgs : {productId, qty}
+        passedArgs: { productId, qty },
       };
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -40,20 +40,40 @@ export const addToCart = createAsyncThunk(
 );
 
 // remove from cart
-export const removeFromCart = createAsyncThunk("cart/removeFromCart", async({productId, qty}, thunkAPI)=>{
-  console.log("Inside thunk: Calling /cart/remove");
-  try {
-  const response = await axiosInstance.post("/cart/remove", {productId, qty})
-  return {
-    data: response.data,
-    passedArgs: {productId, qty}
+export const removeFromCart = createAsyncThunk(
+  "cart/removeFromCart",
+  async ({ productId, qty }, thunkAPI) => {
+    console.log("Inside thunk: Calling /cart/remove");
+    try {
+      const response = await axiosInstance.post("/cart/remove", {
+        productId,
+        qty,
+      });
+      return {
+        data: response.data,
+        passedArgs: { productId, qty },
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
   }
-  } catch (error) {
-    return thunkAPI.rejectWithValue(
-      error.response?.data?.message || error.message
-    );
+);
+
+export const clearCart = createAsyncThunk(
+  "cart/clearCart",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete("/cart/clear-cart");
+      return response.data.cart; // Should be []
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
   }
-})
+);
 
 const cartSlice = createSlice({
   name: "cart",
@@ -61,6 +81,7 @@ const cartSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    // ! fetch cart
       .addCase(fetchCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -73,7 +94,7 @@ const cartSlice = createSlice({
       .addCase(fetchCart.rejected, (state, action) => {
         (state.loading = false), (state.error = action.payload);
       })
-      // add to cart
+      //! add to cart
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -81,21 +102,22 @@ const cartSlice = createSlice({
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-      
+
         // Extract the full returned product object from API
-        const {data, passedArgs} = action.payload; 
+        const { data, passedArgs } = action.payload;
         // action.payload = {data: api response, passedArgs: {qty, productId}}
-        const addedProduct = data.product // has { productId: { ... }, qty, _id }
-      
+        const addedProduct = data.product; // has { productId: { ... }, qty, _id }
+
         // Check if product already exists in cart
         const productIndex = state.cart.findIndex(
           (item) => item.productId._id === addedProduct.productId._id
         );
-      
+
         if (productIndex !== -1) {
           // If already in cart, increase quantity
-          
-          state.cart[productIndex].qty = Number(state.cart[productIndex].qty) + Number(passedArgs.qty);
+
+          state.cart[productIndex].qty =
+            Number(state.cart[productIndex].qty) + Number(passedArgs.qty);
         } else {
           // If new, push to cart
           state.cart.push(addedProduct);
@@ -105,20 +127,33 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // remove from cart
-      .addCase(removeFromCart.pending, (state)=>{
-        state.loading = true
-        state.error = null
+      // ! remove from cart
+      .addCase(removeFromCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
-      .addCase(removeFromCart.fulfilled, (state, action)=>{
-        state.loading = false
-        state.error = null
+      .addCase(removeFromCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
         // state management is done on cart component/page with chained api call in handleRemove
       })
-      .addCase(removeFromCart.rejected, (state, action)=>{
-        state.loading = false,
-        state.error = action.payload
+      .addCase(removeFromCart.rejected, (state, action) => {
+        (state.loading = false), (state.error = action.payload);
       })
+      // ! clear cart
+      .addCase(clearCart.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(clearCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cart = action.payload; // This will be []
+        state.error = null;
+      })
+      .addCase(clearCart.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 

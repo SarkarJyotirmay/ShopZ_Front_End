@@ -21,6 +21,8 @@ import { setUser } from "./store/slices/userSlice";
 import Cart from "./pages/Cart/Cart";
 import SingleProduct from "./pages/products/SingleProduct";
 import { ToastContainer } from 'react-toastify';
+import CheckoutPage from "./pages/Orders/CheckoutPage";
+import OrdersPage from "./pages/Orders/OrdersPage";
 
 const App = () => {
   // for state less login
@@ -55,6 +57,14 @@ const App = () => {
         {
           path: "/cart",
           element: <Cart />,
+        },
+        {
+          path: "/checkout",
+          element: <CheckoutPage />,
+        },
+        {
+          path: "/orders",
+          element: <OrdersPage />,
         },
         {
           path: "/about",
